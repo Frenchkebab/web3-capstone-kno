@@ -1,0 +1,124 @@
+
+span{
+  font-size:15px;
+}
+
+
+a{
+  text-decoration:none; 
+}
+
+.main-title{
+  padding-top: 5%;
+  text-align: center;
+}
+.body{
+  background: #eee;
+}
+
+.box{
+  padding:60px 0px;
+}
+
+.box-part{
+  background:#FFF;
+  border-radius:0;
+  padding:60px 10px;
+  margin:30px 0px;
+}
+.text{
+  margin:20px 0px;
+}
+
+
+.register-login-form
+{
+  min-height: 100vh; 
+  background-size: cover; 
+  background-color: #eee;
+}
+
+.card
+{
+  border: 0%;
+}
+
+.post {
+  text-align: center;
+  background-color: #eee;
+  padding-left: 1%;
+  padding-top: 5%;
+  padding-right: 5%;
+  padding-bottom: 20%;
+
+}
+
+.form-group
+{
+  padding-bottom: 2%;
+}
+
+.btn-post
+{
+  position: relative;
+  left: 10%;
+}
+
+.question-container
+{
+  padding-bottom: 5%;
+}
+.answer-container
+{
+  padding-bottom: 5%;
+}
+.input-part
+{
+  padding-top: 2%;
+}
+
+.btn-answer 
+{
+  position: relative;
+  padding-top: 5%;
+  left:40%;
+}
+
+.inform-card
+{
+  padding-top: 5%;
+  height: 500px;
+}
+
+.mypage-row
+{
+  padding: 5%;
+}
+
+.btn-accept
+{
+  position: relative;
+  left: 85%;
+  background-color: #eee;
+  font-size: 1px;
+}
+
+.btn-edit
+{
+  position: relative;
+  left: 85%;
+  background-color: #eee;
+  font-size: 1px;
+}
+
+.content-box
+{
+  position: relative;
+  left: 5%;
+  right: 5%;
+}
+
+.form-content
+{
+  height: 400px;
+}
