@@ -1,11 +1,5 @@
 import { useRecoilState } from 'recoil';
-import {
-  contentState,
-  titleState,
-  authorState,
-  userWalletAddressState,
-} from '../../atoms';
-import Axios from 'axios';
+import { userWalletAddressState } from '../../atoms';
 import { useState } from 'react';
 
 function Post() {
