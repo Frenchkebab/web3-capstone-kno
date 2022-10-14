@@ -187,7 +187,7 @@ function Detail() {
                 <div className="input-part">
                   <input
                     type="text"
-                    readonly
+                    readOnly
                     className="form-control form-body form-content"
                     id="answer"
                     name="answer"

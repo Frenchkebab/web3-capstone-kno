@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom';
 import Board from './Components/Board';
 import Register from './Components/Register';
 import Connect from './Components/Connect';
-import Post from './Components/Post';
+import Post from './Components/Post/Post';
 import Detail from './Components/Detail';
 import Mypage from './Components/Mypage';
 import Header from './Components/Header';
