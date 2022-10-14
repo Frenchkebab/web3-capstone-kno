@@ -21,7 +21,7 @@ function Board() {
   return (
     <div className="Board">
       <div className="body">
-        <h2 className="main-title">Today's Question</h2>
+        <h2 className="main-title">Questions</h2>
 
         <div className="box">
           <div className="container">
