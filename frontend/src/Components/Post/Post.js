@@ -1,35 +1,40 @@
 import { useRecoilState } from 'recoil';
 import { userWalletAddressState } from '../../atoms';
 import { useState } from 'react';
+import { createDir, uploadPostQuestion } from '../../Helpers/ipfs';
 
 function Post() {
   const [author, setAuthor] = useRecoilState(userWalletAddressState);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [timestamp, setTimestamp] = useState();
 
   const onTitleHandler = (e) => {
     setTitle(e.target.value);
+    setTimestamp(Date.now());
     console.log(title);
   };
   const onContentHandler = (e) => {
     setContent(e.target.value);
+    setTimestamp(Date.now());
     console.log(content);
   };
 
-  const onPost = () => {
-    setAuthor(sessionStorage.getItem('user_id'));
-
-    const postInfo = {
-      title,
-      timestamp: Date.now(),
-      content,
+  const onPost = async (e) => {
+    const postInfo = JSON.stringify({
       author,
-    };
+      timestamp,
+      title,
+      content,
+    });
 
     if (!title || !content) {
       console.log('모든 항목을 다 입력해주십시오.');
+      // upload the post
     } else {
       console.log(postInfo);
+      await createDir(author);
+      await uploadPostQuestion(author, postInfo);
     }
   };
 

@@ -12,7 +12,7 @@ async function ipfsClient() {
 }
 
 // Create Directory
-async function createDir(userAddress) {
+export const createDir = async (userAddress) => {
   //질문,답변 디렉토리 생성
   const ipfs = await ipfsClient();
   await ipfs.files.mkdir('/root/' + userAddress + '/question', {
@@ -29,25 +29,27 @@ async function createDir(userAddress) {
   console.log(`root: ${root.cid}`);
   console.log(`qusetionDir: ${questionDir.cid}`);
   console.log(`answerDir: ${answerDir.cid}`);
-}
+};
 
 // Upload file
-async function uploadPostQuestion(userAddress, content) {
+export const uploadPostQuestion = async (userAddress, content) => {
   const ipfs = await ipfsClient();
   // let qFile = fs.readFileSync('./test.json');
+  console.log(content);
   await ipfs.files.write(
-    '/root/' + userAddress + '/question/questiontest.json',
+    '/root/' + userAddress + '/question/questiontest2.json',
     content,
     { create: true }
   );
 
+  // fetches cid from ipfs
   const fileStat = await ipfs.files.stat(
-    '/root/' + userAddress + '/question/questiontest.json'
+    '/root/' + userAddress + '/question/questiontest2.json'
   );
-  console.log('uploaded file: ', fileStat.cid.toString());
+  console.log('fileStat: ', fileStat.cid.toString());
 
   return fileStat.cid;
-}
+};
 
 async function uploadPostAnswer(userAddress, content) {
   const ipfs = await ipfsClient();

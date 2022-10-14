@@ -24,7 +24,7 @@ function Connect() {
     });
   }
 
-  const handleConnect = async () => {
+  const handleConnect = async (e) => {
     const ethereum = window.ethereum;
     if (ethereum) {
       await ethereum.request({ method: 'eth_requestAccounts' });
