@@ -44,7 +44,7 @@ function Header() {
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <Link to="/" style={{ textDecoration: 'none' }}>
-                <li className="px-2 text-white">QnA For Everyone</li>
+                <li className="px-2 text-white">KNOLEDGER</li>
               </Link>
             </ul>
 
@@ -62,7 +62,9 @@ function Header() {
 
             <div className="text-end">
               {isConnected ? (
-                <span>{getTruncatedAddress(userWalletAddress)}</span>
+                <span className="me-2">
+                  {getTruncatedAddress(userWalletAddress)}
+                </span>
               ) : (
                 <Connect />
               )}
@@ -84,7 +86,7 @@ function Header() {
               {isConnected && (
                 <Link to="/post">
                   <button type="button" className="btn btn-outline-light me-2">
-                    Go Question
+                    Post Question
                   </button>
                 </Link>
               )}

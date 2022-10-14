@@ -14,19 +14,9 @@ function Connect() {
   const [isConnected, setIsConnected] = useRecoilState(isConnectedState);
   const [provider, setProvider] = useRecoilState(providerState);
 
-  // useEffect(() => {
-  //   async function init() {
-  //     const _provider = await getProvider();
-  //     setProvider(_provider);
-  //     console.log(_provider);
-  //     const _walletAddress = await getSignerAddress();
-  //     if (_walletAddress) {
-  //       setUserWalletAddress(_walletAddress);
-  //     }
-  //   }
-
-  //   init();
-  // }, []);
+  useEffect(() => {
+    handleConnect();
+  }, []);
 
   if (provider) {
     provider.on('accountChanged', (address) => {
@@ -41,6 +31,7 @@ function Connect() {
       console.log(ethereum);
       const address = await getSignerAddress();
       if (address) {
+        console.log(address);
         setUserWalletAddress(address);
         setIsConnected(true);
       }

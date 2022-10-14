@@ -87,7 +87,7 @@ function Post() {
           onClick={onPost}
           className="btn btn-post bg-dark btn-outline-light btn-lg px-5 text-white "
         >
-          Go to Question!
+          Post Question
         </button>
       </div>
     </div>
