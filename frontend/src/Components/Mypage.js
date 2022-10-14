@@ -1,4 +1,11 @@
+import { useRecoilState } from 'recoil';
+import { userWalletAddressState } from '../atoms';
+
 function Mypage() {
+  const [userWalletAddress, setUserWalletAddress] = useRecoilState(
+    userWalletAddressState
+  );
+
   return (
     <div className="Mypage">
       <section className="vh-100 gradient-custom body">
@@ -10,15 +17,13 @@ function Mypage() {
                 <div className="card bg-white text-black">
                   <div className="card-body p-5">
                     <div className="row mypage-row">
-                      <div className="col fw-bold">Coin: </div>
+                      <div className="col fw-bold">KNO Token: </div>
                       <div className="col-8">1234567</div>
                     </div>
 
                     <div className="row mypage-row">
                       <div className="col fw-bold">Address: </div>
-                      <div className="col-8">
-                        0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B
-                      </div>
+                      <div className="col-8">{userWalletAddress}</div>
                     </div>
 
                     <div className="row mypage-row">

@@ -1,46 +1,40 @@
 import { useRecoilState } from 'recoil';
-import { contentState, titleState, authorState } from '../atoms';
-import Axios from 'axios';
+import { userWalletAddressState } from '../../atoms';
+import { useState } from 'react';
+import { createDir, uploadPostQuestion } from '../../Helpers/ipfs';
 
 function Post() {
-  const [author, setAuthor] = useRecoilState(authorState);
-  const [title, setTitle] = useRecoilState(titleState);
-  const [content, setContent] = useRecoilState(contentState);
+  const [author, setAuthor] = useRecoilState(userWalletAddressState);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [timestamp, setTimestamp] = useState();
 
   const onTitleHandler = (e) => {
     setTitle(e.target.value);
+    setTimestamp(Date.now());
+    console.log(title);
   };
   const onContentHandler = (e) => {
     setContent(e.target.value);
+    setTimestamp(Date.now());
+    console.log(content);
   };
 
-  const onPost = () => {
-    setAuthor(sessionStorage.getItem('user_id'));
-
-    const postInfo = {
+  const onPost = async (e) => {
+    const postInfo = JSON.stringify({
+      author,
+      timestamp,
       title,
       content,
-      author,
-    };
+    });
 
-    var hasEmptyInfo = false;
-
-    for (var i in postInfo) {
-      if (!postInfo[i]) hasEmptyInfo = true;
-    }
-
-    if (hasEmptyInfo) {
+    if (!title || !content) {
       console.log('모든 항목을 다 입력해주십시오.');
+      // upload the post
     } else {
       console.log(postInfo);
-      Axios.post('http://localhost:8000/post/question', postInfo)
-        .then((res) => {
-          console.log(res);
-          document.location.href = `/`;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      await createDir(author);
+      await uploadPostQuestion(author, postInfo);
     }
   };
 
@@ -49,13 +43,12 @@ function Post() {
       <div className="post">
         <form>
           <div className="form-group row">
-            <label for="title" className="col-sm-2 col-form-label">
+            <label htmlFor="title" className="col-sm-2 col-form-label">
               Title
             </label>
             <div className="col-sm-10">
               <input
                 type="text"
-                readonly
                 className="form-control form-body"
                 id="title"
                 name="title"
@@ -66,19 +59,18 @@ function Post() {
           </div>
 
           <div className="form-group row">
-            <label for="content" className="col-sm-2 col-form-label">
+            <label htmlFor="content" className="col-sm-2 col-form-label">
               Content
             </label>
             <div className="col-sm-10">
-              <input
+              <textarea
                 type="text"
-                readonly
                 className="form-control form-body form-content"
                 id="content"
                 name="content"
                 value={content}
                 onChange={onContentHandler}
-              ></input>
+              ></textarea>
             </div>
           </div>
         </form>
