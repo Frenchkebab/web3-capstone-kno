@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { useWallet } from '../Context/WalletContext';
-import { getSignerAddress } from '../Helpers/provider';
+import { getSigner, getSignerAddress } from '../Helpers/provider';
 
 function Connect() {
   const { walletAddress, setWalletAddress } = useWallet();
+  const { knov1Contract } = useKNOV1Contract();
 
   // Connect
   const handleConnect = async () => {
@@ -15,6 +18,14 @@ function Connect() {
       }
     }
   };
+
+  useEffect(() => {
+    if (walletAddress) {
+      (async () => {
+        console.log(await knov1Contract.isRegistered(walletAddress));
+      })();
+    }
+  }, [walletAddress]);
 
   return (
     <button

@@ -4,8 +4,8 @@ import { getProvider, getSignerAddress } from '../Helpers/provider';
 const WalletContext = createContext({});
 
 export const WalletProvider = ({ children }) => {
-  const [walletAddress, setWalletAddress] = useState('');
-  const [provider, setProvider] = useState();
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [provider, setProvider] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export const WalletProvider = ({ children }) => {
       console.log('address: ', address);
     });
   }
+
   return (
     <WalletContext.Provider
       value={{

@@ -1,12 +1,22 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { isConnectedState } from '../atoms';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { useWallet } from '../Context/WalletContext';
 import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
   const { walletAddress, setWalletAddress, isRegistered } = useWallet();
+  const { knov1Contract } = useKNOV1Contract();
+
+  useEffect(() => {
+    if (walletAddress && knov1Contract) {
+      console.log(walletAddress);
+      (async () => {
+        console.log(await knov1Contract.isRegistered(walletAddress));
+      })();
+    }
+  });
 
   return (
     <div className="Header">

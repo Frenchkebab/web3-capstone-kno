@@ -1,10 +1,16 @@
 import { useRecoilState } from 'recoil';
 import { usernameState } from '../atoms';
 import { Link, useNavigate } from 'react-router-dom';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { ethers } from 'ethers';
+import { useWallet } from '../Context/WalletContext';
+import { getSigner } from '../Helpers/provider';
 
 function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useRecoilState(usernameState);
+  const { knov1Contract } = useKNOV1Contract();
+  const { walletAddress } = useWallet();
 
   const onUsernameHandler = (e) => {
     setUsername(e.target.value);
@@ -14,8 +20,25 @@ function Register() {
     if (!username) {
       alert('Please fill in nickname');
     } else {
-      console.log(username);
-      document.location.href = '/';
+      try {
+        // call register()
+        const signedKnoV1Contract = knov1Contract.connect(await getSigner());
+        console.log('Signed KNOV1 Contract: ', signedKnoV1Contract);
+        const tx = await signedKnoV1Contract.registerUser(username);
+        await tx.wait();
+        alert('Wallet Successfully Registered');
+      } catch (err) {
+        console.log(err.reason);
+        alert('Already Registered');
+      } finally {
+        const isRegistered = await knov1Contract.isRegistered(walletAddress);
+
+        console.log(username);
+        console.log(isRegistered);
+        navigate('/');
+      }
+
+      // document.location.href = '/';
     }
   };
 
@@ -45,7 +68,7 @@ function Register() {
                       />
                     </div>
 
-                    <Link to="/connect">
+                    <Link to="/register">
                       <button
                         type="submit"
                         onClick={onRegister}

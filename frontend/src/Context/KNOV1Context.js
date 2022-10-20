@@ -18,7 +18,11 @@ export const KNOV1Provider = ({ children }) => {
       const _provider = await getProvider();
       const signer = _provider.getSigner();
       console.log(_provider, signer);
-      const _contract = new ethers.Contract(addresses.KNOV1, KNOV1.abi, signer);
+      const _contract = new ethers.Contract(
+        addresses.KNOV1,
+        KNOV1.abi,
+        _provider
+      );
       setContract(_contract);
       console.log('Contract: ', _contract);
     }
