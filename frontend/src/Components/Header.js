@@ -6,16 +6,20 @@ import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
-  const { walletAddress, setWalletAddress, isRegistered } = useWallet();
+  const { walletAddress, setWalletAddress, isRegistered, setIsRegistered } =
+    useWallet();
   const { knov1Contract } = useKNOV1Contract();
 
   useEffect(() => {
     if (walletAddress && knov1Contract) {
-      console.log(walletAddress);
       (async () => {
-        console.log(await knov1Contract.isRegistered(walletAddress));
+        const registry = await knov1Contract.isRegistered(walletAddress);
+        if (registry) {
+          setIsRegistered(true);
+        }
       })();
     }
+    // console.log(walletAddress, isRegistered);
   });
 
   return (
@@ -51,11 +55,24 @@ function Header() {
               )}
 
               {walletAddress && isRegistered ? (
-                <Link to="/mypage">
-                  <button type="button" className="btn btn-outline-light me-2">
-                    My Page
-                  </button>
-                </Link>
+                <>
+                  <Link to="/mypage">
+                    <button
+                      type="button"
+                      className="btn btn-outline-light me-2"
+                    >
+                      My Page
+                    </button>
+                  </Link>
+                  <Link to="/post">
+                    <button
+                      type="button"
+                      className="btn btn-outline-light me-2"
+                    >
+                      Post Question
+                    </button>
+                  </Link>
+                </>
               ) : (
                 <Link to="/register">
                   <button type="button" className="btn btn-outline-light me-2">
@@ -63,14 +80,6 @@ function Header() {
                   </button>
                 </Link>
               )}
-
-              {walletAddress && isRegistered ? (
-                <Link to="/post">
-                  <button type="button" className="btn btn-outline-light me-2">
-                    Post Question
-                  </button>
-                </Link>
-              ) : null}
             </div>
           </div>
         </div>

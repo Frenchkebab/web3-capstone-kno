@@ -19,14 +19,6 @@ function Connect() {
     }
   };
 
-  useEffect(() => {
-    if (walletAddress) {
-      (async () => {
-        console.log(await knov1Contract.isRegistered(walletAddress));
-      })();
-    }
-  }, [walletAddress]);
-
   return (
     <button
       type="button"
