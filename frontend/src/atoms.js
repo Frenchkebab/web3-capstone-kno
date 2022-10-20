@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import addresses from './artifacts/contracts/addresses.json';
 
 // used in Board.js
 export const viewContentState = atom({
@@ -33,7 +34,6 @@ export const answerState = atom({
 });
 
 // used in Login.js & Register.js
-
 export const usernameState = atom({
   key: 'usernameState',
   default: '',
@@ -110,4 +110,11 @@ export const acceptedAnswerState = atom({
 export const acceptedState = atom({
   key: 'acceptedState',
   default: 'false',
+});
+
+// contract addresses
+
+export const KNOV1AddressState = atom({
+  key: 'knov1State',
+  default: addresses.KNOV1,
 });
