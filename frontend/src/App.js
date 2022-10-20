@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Board from './Components/Board';
 import Register from './Components/Register';
 import Connect from './Components/Connect';
@@ -14,29 +14,19 @@ function App() {
       <WalletProvider>
         <Header></Header>
 
-        <Route exact path="/">
-          <Board />
-        </Route>
+        <Routes>
+          <Route exact path="/" element={<Board />} />
 
-        <Route path="/detail/:idpost">
-          <Detail />
-        </Route>
+          <Route path="/detail/:idpost" element={<Detail />} />
 
-        <Route path="/register">
-          <Register />
-        </Route>
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/connect">
-          <Connect />
-        </Route>
+          <Route path="/connect" element={<Connect />} />
 
-        <Route path="/post">
-          <Post />
-        </Route>
+          <Route path="/post" element={<Post />} />
 
-        <Route path="/mypage">
-          <Mypage />
-        </Route>
+          <Route path="/mypage" element={<Mypage />} />
+        </Routes>
       </WalletProvider>
     </div>
   );
