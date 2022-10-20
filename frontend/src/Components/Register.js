@@ -5,12 +5,13 @@ import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { ethers } from 'ethers';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
+import { useEffect } from 'react';
 
 function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useRecoilState(usernameState);
   const { knov1Contract } = useKNOV1Contract();
-  const { walletAddress } = useWallet();
+  const { walletAddress, setIsRegistered } = useWallet();
 
   const onUsernameHandler = (e) => {
     setUsername(e.target.value);
@@ -26,6 +27,7 @@ function Register() {
         console.log('Signed KNOV1 Contract: ', signedKnoV1Contract);
         const tx = await signedKnoV1Contract.registerUser(username);
         await tx.wait();
+        setIsRegistered(true);
         alert('Wallet Successfully Registered');
       } catch (err) {
         console.log(err.reason);
