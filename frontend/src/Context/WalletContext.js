@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getProvider, getSignerAddress } from '../Helpers/provider';
 
-const WalletContext = React.createContext({});
+const WalletContext = createContext({});
 
 export const WalletProvider = ({ children }) => {
-  const [walletAddress, setWalletAddress] = React.useState('');
-  const [provider, setProvider] = React.useState();
-  React.useEffect(() => {
+  const [walletAddress, setWalletAddress] = useState('');
+  const [provider, setProvider] = useState();
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
     async function init() {
       const _provider = await getProvider();
       setProvider(_provider);
@@ -18,6 +20,7 @@ export const WalletProvider = ({ children }) => {
     }
     init();
   }, []);
+
   if (provider) {
     provider.on('accountChanged', (address) => {
       console.log('address: ', address);
@@ -28,6 +31,8 @@ export const WalletProvider = ({ children }) => {
       value={{
         walletAddress,
         setWalletAddress,
+        isRegistered,
+        setIsRegistered,
       }}
     >
       {children}
@@ -35,4 +40,4 @@ export const WalletProvider = ({ children }) => {
   );
 };
 
-export const useWallet = () => React.useContext(WalletContext);
+export const useWallet = () => useContext(WalletContext);
