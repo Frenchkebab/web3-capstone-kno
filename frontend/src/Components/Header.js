@@ -11,20 +11,12 @@ import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
-  const [userWalletAddress, setUserWalletAddress] = useRecoilState(
-    userWalletAddressState
-  );
-  const [userWallet, setUserWallet] = useRecoilState(userWalletState);
+  // const [userWalletAddress, setUserWalletAddress] = useRecoilState(
+  //   userWalletAddressState
+  // );
+  // const [userWallet, setUserWallet] = useRecoilState(userWalletState);
 
   const [isConnected, setIsConnected] = useRecoilState(isConnectedState);
-
-  useEffect(() => {
-    if (!userWallet) {
-      setIsConnected(false);
-    } else {
-      setIsConnected(true);
-    }
-  }, [userWallet]);
 
   return (
     <div className="Header">
@@ -52,7 +44,7 @@ function Header() {
             <div className="text-end">
               {isConnected ? (
                 <span className="me-2">
-                  {getTruncatedAddress(userWalletAddress)}
+                  {/* {getTruncatedAddress(userWalletAddress)} */}
                 </span>
               ) : (
                 <Connect />
