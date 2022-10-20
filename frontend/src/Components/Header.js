@@ -26,17 +26,6 @@ function Header() {
     }
   }, [userWallet]);
 
-  const onLogout = () => {
-    Axios.get('http://localhost:8000/logout', null)
-      .then((res) => {
-        sessionStorage.removeItem('user_id');
-        document.location.href = '/';
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   return (
     <div className="Header">
       <header className="p-3 text-bg-dark">
