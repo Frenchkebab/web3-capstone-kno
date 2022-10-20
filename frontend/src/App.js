@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Board from './Components/Board';
 import Register from './Components/Register';
 import Connect from './Components/Connect';
@@ -6,35 +6,31 @@ import Post from './Components/Post/Post';
 import Detail from './Components/Detail';
 import Mypage from './Components/Mypage';
 import Header from './Components/Header';
+import { WalletProvider } from './Context/WalletContext';
+import { KNOV1Provider } from './Context/KNOV1Context';
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      <WalletProvider>
+        <KNOV1Provider>
+          <Header></Header>
 
-      <Route exact path="/">
-        <Board />
-      </Route>
+          <Routes>
+            <Route exact path="/" element={<Board />} />
 
-      <Route path="/detail/:idpost">
-        <Detail />
-      </Route>
+            <Route path="/detail/:idpost" element={<Detail />} />
 
-      <Route path="/register">
-        <Register />
-      </Route>
+            <Route path="/register" element={<Register />} />
 
-      <Route path="/connect">
-        <Connect />
-      </Route>
+            <Route path="/connect" element={<Connect />} />
 
-      <Route path="/post">
-        <Post />
-      </Route>
+            <Route path="/post" element={<Post />} />
 
-      <Route path="/mypage">
-        <Mypage />
-      </Route>
+            <Route path="/mypage" element={<Mypage />} />
+          </Routes>
+        </KNOV1Provider>
+      </WalletProvider>
     </div>
   );
 }

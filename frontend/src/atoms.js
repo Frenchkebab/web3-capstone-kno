@@ -114,7 +114,7 @@ export const acceptedState = atom({
 
 // contract addresses
 
-export const KNOV1AddressState = atom({
-  key: 'knov1State',
-  default: addresses.KNOV1,
+export const KNOV1ContractState = atom({
+  key: 'KNOV1ContractState',
+  default: null,
 });

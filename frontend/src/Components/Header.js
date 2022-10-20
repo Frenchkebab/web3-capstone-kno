@@ -1,41 +1,22 @@
-import Axios from 'axios';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import {
-  isConnectedState,
-  userWalletAddressState,
-  userWalletState,
-} from '../atoms';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useWallet } from '../Context/WalletContext';
 import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
-  const [userWalletAddress, setUserWalletAddress] = useRecoilState(
-    userWalletAddressState
-  );
-  const [userWallet, setUserWallet] = useRecoilState(userWalletState);
-
-  const [isConnected, setIsConnected] = useRecoilState(isConnectedState);
+  const { walletAddress, setWalletAddress, isRegistered } = useWallet();
+  const { knov1Contract } = useKNOV1Contract();
 
   useEffect(() => {
-    if (!userWallet) {
-      setIsConnected(false);
-    } else {
-      setIsConnected(true);
+    if (walletAddress && knov1Contract) {
+      console.log(walletAddress);
+      (async () => {
+        console.log(await knov1Contract.isRegistered(walletAddress));
+      })();
     }
-  }, [userWallet]);
-
-  const onLogout = () => {
-    Axios.get('http://localhost:8000/logout', null)
-      .then((res) => {
-        sessionStorage.removeItem('user_id');
-        document.location.href = '/';
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  });
 
   return (
     <div className="Header">
@@ -61,15 +42,15 @@ function Header() {
             </form>
 
             <div className="text-end">
-              {isConnected ? (
+              {walletAddress ? (
                 <span className="me-2">
-                  {getTruncatedAddress(userWalletAddress)}
+                  {getTruncatedAddress(walletAddress)}
                 </span>
               ) : (
                 <Connect />
               )}
 
-              {isConnected ? (
+              {walletAddress && isRegistered ? (
                 <Link to="/mypage">
                   <button type="button" className="btn btn-outline-light me-2">
                     My Page
@@ -83,13 +64,13 @@ function Header() {
                 </Link>
               )}
 
-              {isConnected && (
+              {walletAddress && isRegistered ? (
                 <Link to="/post">
                   <button type="button" className="btn btn-outline-light me-2">
                     Post Question
                   </button>
                 </Link>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
