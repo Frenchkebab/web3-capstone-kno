@@ -7,26 +7,29 @@ import Detail from './Components/Detail';
 import Mypage from './Components/Mypage';
 import Header from './Components/Header';
 import { WalletProvider } from './Context/WalletContext';
+import { KNOV1Provider } from './Context/KNOV1Context';
 
 function App() {
   return (
     <div className="App">
       <WalletProvider>
-        <Header></Header>
+        <KNOV1Provider>
+          <Header></Header>
 
-        <Routes>
-          <Route exact path="/" element={<Board />} />
+          <Routes>
+            <Route exact path="/" element={<Board />} />
 
-          <Route path="/detail/:idpost" element={<Detail />} />
+            <Route path="/detail/:idpost" element={<Detail />} />
 
-          <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route path="/connect" element={<Connect />} />
+            <Route path="/connect" element={<Connect />} />
 
-          <Route path="/post" element={<Post />} />
+            <Route path="/post" element={<Post />} />
 
-          <Route path="/mypage" element={<Mypage />} />
-        </Routes>
+            <Route path="/mypage" element={<Mypage />} />
+          </Routes>
+        </KNOV1Provider>
       </WalletProvider>
     </div>
   );

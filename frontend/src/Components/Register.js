@@ -1,19 +1,21 @@
 import { useRecoilState } from 'recoil';
 import { usernameState } from '../atoms';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
+  const navigate = useNavigate();
   const [username, setUsername] = useRecoilState(usernameState);
 
   const onUsernameHandler = (e) => {
     setUsername(e.target.value);
   };
 
-  const onRegister = () => {
+  const onRegister = async () => {
     if (!username) {
       alert('Please fill in nickname');
     } else {
       console.log(username);
+      document.location.href = '/';
     }
   };
 

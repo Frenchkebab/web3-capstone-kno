@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import React from 'react';
-import { getProvider } from '../provider';
+import { getProvider } from '../Helpers/provider';
 import { useWallet } from './WalletContext';
-import steakArtifact from '../artifacts/contracts/SteakToken.sol/SteakToken.json';
+import KNOV1 from '../artifacts/abis/KNOV1.json';
 import addresses from '../artifacts/contracts/addresses.json';
 
 const initialState = {};
 
-const SteakContext = React.createContext(initialState);
-export const SteakProvider = ({ children }) => {
+const KNOV1Context = React.createContext(initialState);
+export const KNOV1Provider = ({ children }) => {
   const { walletAddress } = useWallet();
 
   const [contract, setContract] = React.useState();
@@ -17,13 +17,10 @@ export const SteakProvider = ({ children }) => {
     async function init() {
       const _provider = await getProvider();
       const signer = _provider.getSigner();
-      const _contract = new ethers.Contract(
-        addresses.SteakTokenAddress,
-        steakArtifact.abi,
-        signer
-      );
+      console.log(_provider, signer);
+      const _contract = new ethers.Contract(addresses.KNOV1, KNOV1.abi, signer);
       setContract(_contract);
-      console.log('Finish init steak: ', _contract);
+      console.log('Contract: ', _contract);
     }
 
     if (walletAddress) {
@@ -32,13 +29,14 @@ export const SteakProvider = ({ children }) => {
   }, [walletAddress]);
 
   return (
-    <SteakContext.Provider
+    <KNOV1Context.Provider
       value={{
-        steakContract: contract,
-      }}>
+        knov1Contract: contract,
+      }}
+    >
       {children}
-    </SteakContext.Provider>
+    </KNOV1Context.Provider>
   );
 };
 
-export const useSteak = () => React.useContext(SteakContext);
+export const useKNOV1Contract = () => React.useContext(KNOV1Context);

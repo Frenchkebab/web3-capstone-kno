@@ -11,13 +11,6 @@ function Board() {
   const total = viewContent.length;
   const numPages = Math.ceil(total / limit);
 
-  // useEffect(() => {
-  //   Axios.get('http://localhost:8000/list').then((res) => {
-  //     console.log(res.data);
-  //     setViewContent(res.data);
-  //   });
-  // }, [setViewContent]);
-
   return (
     <div className="Board">
       <div className="body">
