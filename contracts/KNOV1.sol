@@ -77,6 +77,10 @@ contract KNOV1 {
         return questionList[qid];
     }
 
+    function getQuestionCid(uint256 qid) external view returns(string memory) {
+        return questionList[qid].cid;
+    }
+
     function getAnswer(uint256 aid) external view returns(Answer memory) {
         return answerList[aid];
     }

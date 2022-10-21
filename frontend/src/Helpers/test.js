@@ -1,11 +1,12 @@
 import { Web3Storage, Blob, File } from 'web3.storage';
 import axios from 'axios';
 
-const TOKEN = process.env.REACT_APP_WEB3_STORAGE_TOKEN;
+function getAccessToken() {
+  return process.env.REACT_APP_WEB3_STORAGE_TOKEN;
+}
 
 function makeStorageClient() {
-  console.log(TOKEN);
-  return new Web3Storage({ token: TOKEN });
+  return new Web3Storage({ token: getAccessToken() });
 }
 
 async function makeFiles(data) {
@@ -33,3 +34,34 @@ export async function uploadData(data) {
   console.log('stored file with cid:', `${cid}/${fileName}`);
   return `${cid}/${fileName}`;
 }
+
+/* 
+  Reading Files
+*/
+
+// async function retrieveFile() {
+//   const client = makeStorageClient();
+//   const res = await client.get(
+//     'bafybeia3mgg7jjjp5rvrahpy2svts2hpzh5br7r6xz2fcr5wdvpo3lxhda'
+//   );
+
+//   const files = await res.files();
+//   for (const file of files) {
+//     console.log(file);
+//   }
+// }
+
+// axios({
+//   url: 'https://ipfs.io/ipfs/bafybeia3mgg7jjjp5rvrahpy2svts2hpzh5br7r6xz2fcr5wdvpo3lxhda/hello.json',
+// }).then((res) => {
+//   console.log(res.data.hello);
+// });
+
+// retrieveFile();
+
+// async function main() {
+//   const files = makeFileObjects();
+//   storeFiles(files);
+// }
+
+// main();
