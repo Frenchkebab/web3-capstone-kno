@@ -30,8 +30,15 @@ function Register() {
         setIsRegistered(true);
         alert('Wallet Successfully Registered');
       } catch (err) {
-        console.log(err.reason);
-        alert('Already Registered');
+        const alreadyRegistered =
+          "Error: VM Exception while processing transaction: reverted with reason string 'User already registered'";
+        if (err.reason === alreadyRegistered) {
+          alert('Already Registered');
+        } else {
+          alert('Error');
+        }
+
+        // alert('Already Registered');
       } finally {
         const isRegistered = await knov1Contract.isRegistered(walletAddress);
 
