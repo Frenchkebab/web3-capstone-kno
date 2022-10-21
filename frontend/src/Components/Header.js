@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { useWallet } from '../Context/WalletContext';
 import { getTruncatedAddress } from '../Helpers/provider';
-import { upload, getData } from '../Helpers/test';
 import Connect from './Connect';
 
 function Header() {

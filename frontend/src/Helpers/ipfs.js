@@ -1,10 +1,10 @@
-// const { create, globSource } = require('ipfs-http-client');
-import { create, globSource } from 'ipfs-http-client';
+import { create } from 'ipfs-http-client';
 import { Buffer } from 'buffer';
 import axios from 'axios';
 
-const projectId = '2GIsdlncK6cMXQgmq0l7hdkYxCD';
-const projectSecret = '1b954962da6547b4ff21bf4759ef9342';
+const projectId = process.env.REACT_APP_PROJECT_ID;
+const projectSecret = process.env.REACT_APP_API_KEY_SECRET;
+
 const auth =
   'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 

@@ -1,12 +1,25 @@
-import { useRecoilState } from 'recoil';
-import { userWalletAddressState } from '../../atoms';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useWallet } from '../../Context/WalletContext';
+import { uploadData } from '../../Helpers/ipfs';
+import { useKNOV1Contract } from '../../Context/KNOV1Context';
+import { getSigner } from '../../Helpers/provider';
+import { useNavigate } from 'react-router-dom';
+import { ethers } from 'ethers';
 
 function Post() {
-  const [author, setAuthor] = useRecoilState(userWalletAddressState);
+  const { walletAddress } = useWallet();
+  const { knov1Contract } = useKNOV1Contract();
+
+  const [author, setAuthor] = useState(walletAddress);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [timestamp, setTimestamp] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setAuthor(walletAddress);
+  }, [walletAddress]);
 
   const onTitleHandler = (e) => {
     setTitle(e.target.value);
@@ -20,17 +33,37 @@ function Post() {
   };
 
   const onPost = async (e) => {
-    const postInfo = JSON.stringify({
+    const signedKnoV1Contract = knov1Contract.connect(await getSigner());
+    const qid = (await signedKnoV1Contract.getTotalQuestionNumber()).toNumber();
+
+    const postInfo = {
+      type: 'Question',
+      qid,
       author,
       timestamp,
       title,
       content,
-    });
+    };
 
     if (!title || !content) {
       console.log('모든 항목을 다 입력해주십시오.');
-      // upload the post
     } else {
+      // upload the post
+      const cid = (await uploadData(postInfo)).path;
+      // const cid = ethers.utils.formatBytes32String(await uploadData(postInfo));
+
+      const tx = await signedKnoV1Contract.postQuestion(cid);
+      await tx.wait();
+
+      const userQids = await signedKnoV1Contract.getUserQids();
+
+      for (let qid of userQids) {
+        const question = await signedKnoV1Contract.getQuestion(qid._hex);
+        console.log(question);
+      }
+
+      alert('Question Posted');
+      navigate('/');
     }
   };
 
