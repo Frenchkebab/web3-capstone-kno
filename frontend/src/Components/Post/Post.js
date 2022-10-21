@@ -1,7 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { userWalletAddressState } from '../../atoms';
 import { useState } from 'react';
-import { createDir, uploadPostQuestion } from '../../Helpers/ipfs';
 
 function Post() {
   const [author, setAuthor] = useRecoilState(userWalletAddressState);
@@ -32,9 +31,6 @@ function Post() {
       console.log('모든 항목을 다 입력해주십시오.');
       // upload the post
     } else {
-      console.log(postInfo);
-      await createDir(author);
-      await uploadPostQuestion(author, postInfo);
     }
   };
 
