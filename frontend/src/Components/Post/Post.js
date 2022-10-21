@@ -46,10 +46,11 @@ function Post() {
     };
 
     if (!title || !content) {
-      console.log('모든 항목을 다 입력해주십시오.');
+      console.log('Fill in all forms');
     } else {
+      alert('Wait for upload...');
       // upload the post
-      const cid = (await uploadData(postInfo)).path;
+      const cid = await uploadData(postInfo);
       // const cid = ethers.utils.formatBytes32String(await uploadData(postInfo));
 
       const tx = await signedKnoV1Contract.postQuestion(cid);

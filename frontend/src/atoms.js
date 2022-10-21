@@ -1,5 +1,4 @@
 import { atom } from 'recoil';
-import addresses from './artifacts/contracts/addresses.json';
 
 // used in Board.js
 export const viewContentState = atom({
@@ -112,9 +111,9 @@ export const acceptedState = atom({
   default: 'false',
 });
 
-// contract addresses
+// state about contract
 
-export const KNOV1ContractState = atom({
-  key: 'KNOV1ContractState',
-  default: null,
+export const totalQuestionNumState = atom({
+  key: 'totalQuestionNumState',
+  default: 0,
 });
