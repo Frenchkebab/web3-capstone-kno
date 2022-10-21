@@ -1,10 +1,33 @@
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userWalletAddressState } from '../atoms';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useWallet } from '../Context/WalletContext';
+import { getSigner } from '../Helpers/provider';
 
 function Mypage() {
-  const [userWalletAddress, setUserWalletAddress] = useRecoilState(
-    userWalletAddressState
-  );
+  const { knov1Contract } = useKNOV1Contract();
+  const { walletAddress } = useWallet();
+  const [userNickname, setUserNickname] = useState();
+  // const [signedContract, setSignedContract] = useState();
+
+  useEffect(() => {
+    const sign = async () => {
+      const signedKnoV1Contract = knov1Contract.connect(await getSigner());
+
+      // get nickname from contract
+      const nickname = await signedKnoV1Contract.getUserNickname();
+      setUserNickname(nickname);
+      console.log(nickname);
+      // setSignedContract(signedContract);
+
+      //! ToDo: read KNO Token Balance
+    };
+
+    if (walletAddress) {
+      sign();
+    }
+  });
 
   return (
     <div className="Mypage">
@@ -17,23 +40,18 @@ function Mypage() {
                 <div className="card bg-white text-black">
                   <div className="card-body p-5">
                     <div className="row mypage-row">
-                      <div className="col fw-bold">KNO Token: </div>
+                      <div className="col fw-bold">Nickaname</div>
+                      <div className="col-8">{userNickname}</div>
+                    </div>
+
+                    <div className="row mypage-row">
+                      <div className="col fw-bold">Wallet Address</div>
+                      <div className="col-8">{walletAddress}</div>
+                    </div>
+
+                    <div className="row mypage-row">
+                      <div className="col fw-bold">KNO Token Balance</div>
                       <div className="col-8">1234567</div>
-                    </div>
-
-                    <div className="row mypage-row">
-                      <div className="col fw-bold">Address: </div>
-                      <div className="col-8">{userWalletAddress}</div>
-                    </div>
-
-                    <div className="row mypage-row">
-                      <div className="col fw-bold">Name: </div>
-                      <div className="col-8">Hyewon</div>
-                    </div>
-
-                    <div className="row mypage-row">
-                      <div className="col fw-bold">Email: </div>
-                      <div className="col-8">gpdnjs2116@gmail.com</div>
                     </div>
                   </div>
                 </div>

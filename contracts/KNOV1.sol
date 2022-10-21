@@ -39,11 +39,14 @@ contract KNOV1 {
         return true;
     }
 
+    /* 
+        Getter functions
+    */
     function isRegistered(address userAddr) external view returns (bool) {
         return users[userAddr].isRegistered;
     }
 
-    function signIn() external view returns (string memory) {
+    function getUserNickname() external view returns (string memory) {
         User memory user = users[msg.sender];
         require(user.isRegistered, "User not registered");
         return user.nickname;
