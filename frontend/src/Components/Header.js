@@ -13,7 +13,7 @@ function Header() {
   useEffect(() => {
     if (walletAddress && knov1Contract) {
       (async () => {
-        const registry = await knov1Contract.isRegistered(walletAddress);
+        const registry = await knov1Contract.getIsRegistered(walletAddress);
         if (registry) {
           setIsRegistered(true);
         }

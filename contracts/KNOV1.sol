@@ -48,9 +48,7 @@ contract KNOV1 {
         return true;
     }
 
-    
     /* ---------- getter functions ----------- */
-    
 
     /* getter functions for User info */
     function getIsRegistered(address userAddr) external view returns (bool) {
@@ -109,7 +107,7 @@ contract KNOV1 {
         return questionList[qid].selectedAnswerId;
     }
 
-    function getAnswerCid(uint256 aid) external view returns(string memory) {
+    function getAnswerCid(uint256 aid) external view returns (string memory) {
         return answerList[aid].cid;
     }
 
@@ -132,8 +130,16 @@ contract KNOV1 {
         return true;
     }
 
-    function postAnswer(uint256 qid, string calldata cid) external returns (bool) {
-        answerList[totalAnswerNumber] = Answer(msg.sender, qid, totalAnswerNumber, cid);
+    function postAnswer(uint256 qid, string calldata cid)
+        external
+        returns (bool)
+    {
+        answerList[totalAnswerNumber] = Answer(
+            msg.sender,
+            qid,
+            totalAnswerNumber,
+            cid
+        );
         answeredList[qid].push(totalAnswerNumber);
         userAnswerList[msg.sender].push(totalAnswerNumber);
         totalAnswerNumber++;
@@ -142,14 +148,13 @@ contract KNOV1 {
     function selectAnswer(uint256 qid, uint256 aid) external returns (bool) {
         // checks if msg.sender is the author of this qid
         require(questionList[qid].author == msg.sender, "Not the author");
-        
 
         // checks if this aid is answerd to the qid
         bool exist = false;
         uint256[] memory answers = answeredList[qid];
-        
-        for(uint256 i = 0; i < answers.length; i++) {
-            if(answers[i] == aid) {
+
+        for (uint256 i = 0; i < answers.length; i++) {
+            if (answers[i] == aid) {
                 exist = true;
             }
         }

@@ -31,14 +31,16 @@ function Board() {
 
   // update total question number
   useEffect(() => {
-    const getTotalQuestionNum = async () => {
-      const num = (await knov1Contract.getTotalQuestionNumber()).toNumber();
-      console.log('total Questoin number: ', num);
-      setTotalQuestionNum(num);
-    };
+    if (knov1Contract) {
+      const getTotalQuestionNum = async () => {
+        const num = (await knov1Contract.getTotalQuestionNumber()).toNumber();
+        console.log('total Questoin number: ', num);
+        setTotalQuestionNum(num);
+      };
 
-    getTotalQuestionNum();
-  });
+      getTotalQuestionNum();
+    }
+  }, [knov1Contract]);
 
   useEffect(() => {
     const cids = [];
@@ -100,7 +102,7 @@ function Board() {
                       </span>
                     </div>
 
-                    <Link to={`/detail/${element.idpost}`}>Read More</Link>
+                    <Link to={`/detail/${element.qid}`}>Read More</Link>
                   </div>
                 </div>
               ))}

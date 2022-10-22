@@ -16,7 +16,7 @@ function Mypage() {
       const signedKnoV1Contract = knov1Contract.connect(await getSigner());
 
       // get nickname from contract
-      const nickname = await signedKnoV1Contract.getUserNickname();
+      const nickname = await signedKnoV1Contract.getUserNickname(walletAddress);
       setUserNickname(nickname);
       console.log(nickname);
       // setSignedContract(signedContract);

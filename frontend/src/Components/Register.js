@@ -40,7 +40,7 @@ function Register() {
 
         // alert('Already Registered');
       } finally {
-        const isRegistered = await knov1Contract.isRegistered(walletAddress);
+        const isRegistered = await knov1Contract.getIsRegistered(walletAddress);
 
         console.log(username);
         console.log(isRegistered);
