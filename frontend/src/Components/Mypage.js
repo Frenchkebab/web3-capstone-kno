@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { userWalletAddressState } from '../atoms';
 import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
@@ -16,7 +14,7 @@ function Mypage() {
       const signedKnoV1Contract = knov1Contract.connect(await getSigner());
 
       // get nickname from contract
-      const nickname = await signedKnoV1Contract.getUserNickname();
+      const nickname = await signedKnoV1Contract.getUserNickname(walletAddress);
       setUserNickname(nickname);
       console.log(nickname);
       // setSignedContract(signedContract);
@@ -27,7 +25,7 @@ function Mypage() {
     if (walletAddress) {
       sign();
     }
-  });
+  }, [walletAddress]);
 
   return (
     <div className="Mypage">

@@ -13,6 +13,7 @@ contract KNOV1 {
     mapping(address => uint256[]) userAnswerList; // address -> aids
 
     mapping(uint256 => Question) questionList; // qid -> Question
+    mapping(uint256 => uint256[]) answeredList; // qid -> aid list
     mapping(uint256 => Answer) answerList; // aid -> Answer
 
     struct User {
@@ -25,6 +26,9 @@ contract KNOV1 {
         address author;
         uint256 qid;
         string cid;
+        bool isSelected;
+        uint256 selectedAnswerId;
+        uint256 reward; // reward will be transfered to selected answer's auther
     }
 
     struct Answer {
@@ -44,25 +48,21 @@ contract KNOV1 {
         return true;
     }
 
-    /* 
-        Read functions
-    */
-    function isRegistered(address userAddr) external view returns (bool) {
+    /* ---------- getter functions ----------- */
+
+    /* getter functions for User info */
+    function getIsRegistered(address userAddr) external view returns (bool) {
         return users[userAddr].isRegistered;
     }
 
-    function getUserNickname() external view returns (string memory) {
-        User memory user = users[msg.sender];
+    function getUserNickname(address userAddr)
+        external
+        view
+        returns (string memory)
+    {
+        User memory user = users[userAddr];
         require(user.isRegistered, "User not registered");
         return user.nickname;
-    }
-
-    function getTotalQuestionNumber() external view returns(uint256) {
-        return totalQuestionNumber;
-    }
-
-    function getTotalAnswerNumber() external view returns(uint256) {
-        return totalAnswerNumber;
     }
 
     function getUserQids() external view returns (uint256[] memory) {
@@ -73,27 +73,66 @@ contract KNOV1 {
         return userAnswerList[msg.sender];
     }
 
-    function getQuestion(uint256 qid) external view returns(Question memory) {
+    /* getter function for Questions */
+    function getTotalQuestionNumber() external view returns (uint256) {
+        return totalQuestionNumber;
+    }
+
+    function getQuestion(uint256 qid) external view returns (Question memory) {
         return questionList[qid];
     }
 
-    function getQuestionCid(uint256 qid) external view returns(string memory) {
+    function getQuestionCid(uint256 qid) external view returns (string memory) {
         return questionList[qid].cid;
     }
 
-    function getAnswer(uint256 aid) external view returns(Answer memory) {
+    function getIsAuthor(uint256 qid) external view returns (bool) {
+        if (questionList[qid].author == msg.sender) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /* getter functions for Answers */
+    function getTotalAnswerNumber() external view returns (uint256) {
+        return totalAnswerNumber;
+    }
+
+    function getAnswer(uint256 aid) external view returns (Answer memory) {
         return answerList[aid];
     }
 
-    /* 
-        Write functions
-    */
+    function getIsSelected(uint256 qid) external view returns (bool) {
+        return questionList[qid].isSelected;
+    }
 
-    function postQuestion(string calldata cid)
+    function getSelectedAnswerId(uint256 qid) external view returns (uint256) {
+        return questionList[qid].selectedAnswerId;
+    }
+
+    function getQuestionAids(uint256 qid)
         external
-        returns (bool)
-    {   
-        questionList[totalQuestionNumber] = Question(msg.sender, totalQuestionNumber, cid);
+        view
+        returns (uint256[] memory)
+    {
+        return answeredList[qid];
+    }
+
+    function getAnswerCid(uint256 aid) external view returns (string memory) {
+        return answerList[aid].cid;
+    }
+
+    /* ---------- setter functions ----------- */
+    function postQuestion(string calldata cid) external returns (bool) {
+        questionList[totalQuestionNumber] = Question(
+            msg.sender,
+            totalQuestionNumber,
+            cid,
+            false,
+            0,
+            100
+        );
         userQuestionList[msg.sender].push(totalQuestionNumber);
         totalQuestionNumber++; // increase qid
 
@@ -103,5 +142,40 @@ contract KNOV1 {
         return true;
     }
 
-    function postAnswer(uint256 qid) external returns (bool) {}
+    function postAnswer(uint256 qid, string calldata cid) external {
+        answerList[totalAnswerNumber] = Answer(
+            msg.sender,
+            qid,
+            totalAnswerNumber,
+            cid
+        );
+        answeredList[qid].push(totalAnswerNumber);
+        userAnswerList[msg.sender].push(totalAnswerNumber);
+        totalAnswerNumber++;
+    }
+
+    function selectAnswer(uint256 qid, uint256 aid) external returns (bool) {
+        // checks if msg.sender is the author of this qid
+        require(questionList[qid].author == msg.sender, "Not the author");
+
+        // checks if this aid is answerd to the qid
+        bool exist = false;
+        uint256[] memory answers = answeredList[qid];
+
+        for (uint256 i = 0; i < answers.length; i++) {
+            if (answers[i] == aid) {
+                exist = true;
+            }
+        }
+
+        require(exist, "Not answerd to this qid");
+
+        // update selected Answer
+        questionList[qid].isSelected = true;
+        questionList[qid].selectedAnswerId = aid;
+
+        //! TODO: transfer KNO token to the author of selected answer
+
+        return true;
+    }
 }

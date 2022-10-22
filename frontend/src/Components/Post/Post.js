@@ -24,22 +24,23 @@ function Post() {
   const onTitleHandler = (e) => {
     setTitle(e.target.value);
     setTimestamp(Date.now());
-    console.log(title);
   };
+
   const onContentHandler = (e) => {
     setContent(e.target.value);
     setTimestamp(Date.now());
-    console.log(content);
   };
 
   const onPost = async (e) => {
     const signedKnoV1Contract = knov1Contract.connect(await getSigner());
     const qid = (await signedKnoV1Contract.getTotalQuestionNumber()).toNumber();
+    const nickname = await signedKnoV1Contract.getUserNickname(walletAddress);
 
     const postInfo = {
       type: 'Question',
       qid,
       author,
+      nickname,
       timestamp,
       title,
       content,

@@ -6,23 +6,21 @@ import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
-  const { walletAddress, setWalletAddress, isRegistered, setIsRegistered } =
-    useWallet();
+  const { walletAddress, isRegistered, setIsRegistered } = useWallet();
   const { knov1Contract } = useKNOV1Contract();
+
+  const checkRegistry = async () => {
+    const registry = await knov1Contract.getIsRegistered(walletAddress);
+    if (registry) {
+      setIsRegistered(true);
+    }
+  };
 
   useEffect(() => {
     if (walletAddress && knov1Contract) {
-      (async () => {
-        const registry = await knov1Contract.isRegistered(walletAddress);
-        if (registry) {
-          setIsRegistered(true);
-        }
-      })();
+      checkRegistry();
     }
-    // upload();
-    // getData('QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen');
-    // console.log(walletAddress, isRegistered);
-  });
+  }, [walletAddress, knov1Contract]);
 
   return (
     <div className="Header">

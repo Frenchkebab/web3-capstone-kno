@@ -17,9 +17,9 @@ function App() {
           <Header></Header>
 
           <Routes>
-            <Route exact path="/" element={<Board />} />
+            <Route path="/" element={<Board />} />
 
-            <Route path="/detail/:idpost" element={<Detail />} />
+            <Route path="/detail/:qid" element={<Detail />} />
 
             <Route path="/register" element={<Register />} />
 
