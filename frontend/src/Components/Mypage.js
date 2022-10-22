@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { userWalletAddressState } from '../atoms';
 import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
@@ -27,7 +25,7 @@ function Mypage() {
     if (walletAddress) {
       sign();
     }
-  });
+  }, [walletAddress]);
 
   return (
     <div className="Mypage">

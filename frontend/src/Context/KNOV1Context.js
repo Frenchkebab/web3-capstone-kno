@@ -24,7 +24,6 @@ export const KNOV1Provider = ({ children }) => {
         _provider
       );
       setContract(_contract);
-      console.log('Contract: ', _contract);
     }
 
     if (walletAddress) {

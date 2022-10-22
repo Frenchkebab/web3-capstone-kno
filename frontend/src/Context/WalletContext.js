@@ -10,10 +10,8 @@ export const WalletProvider = ({ children }) => {
 
   useEffect(() => {
     async function init() {
-      console.log('WalletContext');
       const _provider = await getProvider();
       setProvider(_provider);
-      console.log(_provider);
       const _walletAddress = await getSignerAddress();
       if (_walletAddress) {
         setWalletAddress(_walletAddress);
