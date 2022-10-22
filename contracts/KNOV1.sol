@@ -55,7 +55,11 @@ contract KNOV1 {
         return users[userAddr].isRegistered;
     }
 
-    function getUserNickname() external view returns (string memory) {
+    function getUserNickname(address userAddr)
+        external
+        view
+        returns (string memory)
+    {
         User memory user = users[msg.sender];
         require(user.isRegistered, "User not registered");
         return user.nickname;
@@ -104,7 +108,7 @@ contract KNOV1 {
         view
         returns (uint256[] memory)
     {
-        return questionList[qid].selectedAnswerId;
+        return answeredList[qid];
     }
 
     function getAnswerCid(uint256 aid) external view returns (string memory) {
@@ -130,10 +134,7 @@ contract KNOV1 {
         return true;
     }
 
-    function postAnswer(uint256 qid, string calldata cid)
-        external
-        returns (bool)
-    {
+    function postAnswer(uint256 qid, string calldata cid) external {
         answerList[totalAnswerNumber] = Answer(
             msg.sender,
             qid,
