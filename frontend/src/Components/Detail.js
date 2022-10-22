@@ -49,9 +49,10 @@ const Detail = () => {
     console.log('isSelected: ', selected);
 
     if (selected) {
-      const selectedAid = await knov1Contract
-        .getSelectedAnswerId(qid)
-        .toNumber();
+      const selectedAid = (
+        await knov1Contract.getSelectedAnswerId(qid)
+      ).toNumber();
+      console.log('here!!!!: ', selectedAid);
       setSelectedAnswerId(selectedAid);
     }
   };
@@ -105,7 +106,9 @@ const Detail = () => {
             qid={qid}
             isMine={isMine}
             isSelected={isSelected}
+            setIsSelected={setIsSelected}
             selectedAnswerId={selectedAnswerId}
+            setSelectedAnswerId={setSelectedAnswerId}
             knov1Contract={knov1Contract}
           />
 
