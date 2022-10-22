@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { uploadData } from '../Helpers/ipfs';
+import { getSigner } from '../Helpers/provider';
 
 const DetailAnswerForm = ({
   qid,
@@ -7,22 +9,43 @@ const DetailAnswerForm = ({
   userNickname,
 }) => {
   const [answer, setAnswer] = useState();
+  const [timestamp, setTimestamp] = useState();
 
   const onAnswerHandler = (e) => {
     setAnswer(e.target.value);
+    setTimestamp(Date.now());
   };
 
-  const onAnswer = () => {
+  const onAnswer = async () => {
+    const aid = (await knov1Contract.getTotalAnswerNumber()).toNumber();
+
     const answerInfo = {
+      type: 'Answer',
+      aid,
       author: walletAddress,
       nickname: userNickname,
+      timestamp,
       content: answer,
     };
 
     if (answer === '') {
       console.log('Please fill in the form');
     } else {
-      console.log(answerInfo);
+      alert('Wait for upload...');
+      //! TODO: 1) upload on ipfs
+      const cid = await uploadData(answerInfo);
+      console.log(cid);
+
+      //! TOOD: 2) send this to the contract
+      const signedKnoV1Contract = knov1Contract.connect(await getSigner());
+      const tx = await signedKnoV1Contract.postAnswer(qid, cid);
+      await tx.wait();
+
+      alert('Successfully Posted');
+      const aids = await knov1Contract.getQuestionAids(qid);
+      aids.forEach((aid) => console.log(aid.toNumber()));
+
+      setAnswer('');
     }
   };
 
