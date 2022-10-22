@@ -30,9 +30,11 @@ const Detail = () => {
     const res = await axios.get(`https://ipfs.io/ipfs/${cid}`);
     const content = { ...res.data, reward: reward };
     setQuestionContent(content);
+  };
 
+  const getUserInfo = async () => {
     // check if this question was written by this address
-    if (useWallet) {
+    if (walletAddress) {
       const signedKnoV1Contract = knov1Contract.connect(await getSigner());
       const isAuthor = await signedKnoV1Contract.getIsAuthor(qid);
       console.log('isAuthor: ', isAuthor);
@@ -85,7 +87,7 @@ const Detail = () => {
         getUserInfo();
       }
     }
-  }, [walletAddress]);
+  }, [knov1Contract]);
 
   // useEffect(() => {
   //   getQuestion(qid);
@@ -96,14 +98,14 @@ const Detail = () => {
       <div className="body">
         <div className="box">
           <DetailQuestion questionContent={questionContent} />
-          {/* {!isMine && isRegistered && !isSelected ? (
+          {!isMine && isRegistered && !isSelected ? (
             <DetailAnswerForm
               qid={qid}
               knov1Contract={knov1Contract}
               walletAddress={walletAddress}
               userNickname={userNickname}
             />
-          ) : null} */}
+          ) : null}
         </div>
       </div>
     </div>

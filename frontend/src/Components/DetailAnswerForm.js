@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
-import { useWallet } from '../Context/WalletContext';
 
 const DetailAnswerForm = ({
   qid,
@@ -8,7 +6,7 @@ const DetailAnswerForm = ({
   walletAddress,
   userNickname,
 }) => {
-  const [answer, setAnswer] = useState;
+  const [answer, setAnswer] = useState();
 
   const onAnswerHandler = (e) => {
     setAnswer(e.target.value);
@@ -22,17 +20,9 @@ const DetailAnswerForm = ({
     };
 
     if (answer === '') {
-      console.log('내용을 다 입력해주십시오.');
+      console.log('Please fill in the form');
     } else {
       console.log(answerInfo);
-      // Axios.post('http://localhost:8000/post/answer', answerInfo)
-      //   .then((res) => {
-      //     console.log(res);
-      //     document.location.href = `/detail/${qid}`;
-      //   })
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
     }
   };
 
@@ -42,15 +32,14 @@ const DetailAnswerForm = ({
         <div className="container answer-container">
           <h3>What's your Answer?</h3>
           <div className="input-part">
-            <input
+            <textarea
               type="text"
-              readOnly
               className="form-control form-body form-content"
               id="answer"
               name="answer"
               value={answer}
               onChange={onAnswerHandler}
-            ></input>
+            />
           </div>
         </div>
         <button
@@ -60,7 +49,6 @@ const DetailAnswerForm = ({
           Go to Answer!
         </button>
       </div>
-      ) : null}
     </>
   );
 };
