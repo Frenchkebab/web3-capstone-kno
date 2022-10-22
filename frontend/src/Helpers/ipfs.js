@@ -4,7 +4,6 @@ import axios from 'axios';
 const TOKEN = process.env.REACT_APP_WEB3_STORAGE_TOKEN;
 
 function makeStorageClient() {
-  console.log(TOKEN);
   return new Web3Storage({ token: TOKEN });
 }
 

@@ -178,31 +178,6 @@ function Detail() {
               </div>
             ))}
           </div>
-
-          {!isMine && isConnected && !isAccepted ? (
-            <div>
-              <div className="container answer-container">
-                <h3>What's your Answer?</h3>
-                <div className="input-part">
-                  <input
-                    type="text"
-                    readOnly
-                    className="form-control form-body form-content"
-                    id="answer"
-                    name="answer"
-                    value={answer}
-                    onChange={onAnswerHandler}
-                  ></input>
-                </div>
-              </div>
-              <button
-                onClick={onAnswer}
-                className="btn btn-answer bg-dark btn-outline-light btn-lg px-5 text-white "
-              >
-                Go to Answer!
-              </button>
-            </div>
-          ) : null}
         </div>
       </div>
     </div>

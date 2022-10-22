@@ -60,7 +60,7 @@ contract KNOV1 {
         view
         returns (string memory)
     {
-        User memory user = users[msg.sender];
+        User memory user = users[userAddr];
         require(user.isRegistered, "User not registered");
         return user.nickname;
     }
@@ -84,6 +84,14 @@ contract KNOV1 {
 
     function getQuestionCid(uint256 qid) external view returns (string memory) {
         return questionList[qid].cid;
+    }
+
+    function getIsAuthor(uint256 qid) external view returns (bool) {
+        if (questionList[qid].author == msg.sender) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /* getter functions for Answers */
