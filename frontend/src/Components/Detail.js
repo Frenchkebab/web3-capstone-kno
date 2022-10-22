@@ -8,6 +8,7 @@ import DetailQuestion from './DetailQuestion';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
 import DetailAnswerForm from './DetailAnswerForm';
+import DetailAnswer from './DetailAnswer';
 
 const Detail = () => {
   const { qid } = useParams();
@@ -32,7 +33,7 @@ const Detail = () => {
     setQuestionContent(content);
   };
 
-  const getUserInfo = async () => {
+  const checkIsAuthor = async () => {
     // check if this question was written by this address
     if (walletAddress) {
       const signedKnoV1Contract = knov1Contract.connect(await getSigner());
@@ -65,6 +66,7 @@ const Detail = () => {
       getQuestion(qid);
       checkIsSelected(qid);
       getAnswers(qid);
+      checkIsAuthor();
     }
   }, [knov1Contract]);
 
@@ -98,6 +100,15 @@ const Detail = () => {
       <div className="body">
         <div className="box">
           <DetailQuestion questionContent={questionContent} />
+
+          <DetailAnswer
+            qid={qid}
+            isMine={isMine}
+            isSelected={isSelected}
+            selectedAnswerId={selectedAnswerId}
+            knov1Contract={knov1Contract}
+          />
+
           {!isMine && isRegistered && !isSelected ? (
             <DetailAnswerForm
               qid={qid}

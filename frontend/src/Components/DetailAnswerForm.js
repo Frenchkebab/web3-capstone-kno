@@ -21,6 +21,7 @@ const DetailAnswerForm = ({
 
     const answerInfo = {
       type: 'Answer',
+      qid,
       aid,
       author: walletAddress,
       nickname: userNickname,

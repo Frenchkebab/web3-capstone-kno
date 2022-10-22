@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
