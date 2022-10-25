@@ -53,7 +53,7 @@ function Board() {
         console.log(cids);
       }
 
-      const urls = cids.map((cid) => `https://ipfs.io/ipfs/${cid}`);
+      const urls = cids.map((cid) => `https://nftstorage.link/ipfs/${cid}`);
       const contents = [];
 
       for (let url of urls) {

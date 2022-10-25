@@ -47,7 +47,7 @@ const DetailAnswer = ({
 
       // get contents from cids
       const contents = [];
-      const urls = cids.map((cid) => `https://ipfs.io/ipfs/${cid}`);
+      const urls = cids.map((cid) => `https://nftstorage.link/ipfs/${cid}`);
       for (let url of urls) {
         try {
           const response = await axios.get(url);
