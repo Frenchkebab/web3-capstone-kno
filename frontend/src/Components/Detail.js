@@ -28,7 +28,7 @@ const Detail = () => {
     const question = await knov1Contract.getQuestion(qid);
     const cid = question.cid;
     const reward = question.reward.toNumber();
-    const res = await axios.get(`https://ipfs.io/ipfs/${cid}`);
+    const res = await axios.get(`https://nftstorage.link/ipfs/${cid}`);
     const content = { ...res.data, reward: reward };
     setQuestionContent(content);
   };
