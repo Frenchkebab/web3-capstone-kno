@@ -82,7 +82,7 @@ function Board() {
                 <div
                   className="col-lg-4 col-md-4 col-sm-4 col-xs-12"
                   style={{ width: '300px' }}
-                  key={element.content}
+                  key={element.qid}
                 >
                   <div className="box-part text-center">
                     <div className="title" style={{ fontSize: '10px' }}>
