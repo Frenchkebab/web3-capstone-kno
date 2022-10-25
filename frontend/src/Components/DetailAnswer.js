@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
 import { getSigner } from '../Helpers/provider';
 
 const DetailAnswer = ({
@@ -13,11 +14,6 @@ const DetailAnswer = ({
 }) => {
   const [answerContents, setAnswerContents] = useState([]);
   const [selectedAnswerContent, setSelectedAnswerContent] = useState();
-
-  useEffect(() => {
-    console.log(isMine);
-    console.log(isSelected);
-  });
 
   // get answer contents
   useEffect(() => {
@@ -47,20 +43,19 @@ const DetailAnswer = ({
 
       // get contents from cids
       const contents = [];
-      const urls = cids.map((cid) => `https://nftstorage.link/ipfs/${cid}`);
-      for (let url of urls) {
+      const uris = cids.map((cid) => `https://nftstorage.link/ipfs/${cid}`);
+      for (let uri of uris) {
         try {
-          const response = await axios.get(url);
+          const response = await axios.get(uri);
           const responseData = response.data;
           console.log('response: ', responseData);
+          const cid = await knov1Contract.getAnswerCid(responseData.aid);
+          responseData.cid = cid;
           contents.push(responseData);
         } catch (err) {
           console.log(err);
         }
       }
-
-      const temp = contents.map((answer) => answer.aid);
-      console.log('temp!!!: ', temp);
 
       const selectedAnswer = contents.find(
         (answer) => answer.aid === selectedAnswerId
@@ -94,13 +89,29 @@ const DetailAnswer = ({
                   <div className="box-part" key={answer.aid}>
                     <div className="text content-box">
                       <div style={{ marginBottom: '30px' }}>
-                        <h6>AnswerId</h6>
-                        <span>{answer.aid}</span>
+                        <h6>cid</h6>
+                        <span>
+                          <a
+                            href={`https://ipfs.io/ipfs/${answer?.cid}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {answer.cid}
+                          </a>
+                        </span>
                       </div>
                       <div style={{ marginBottom: '30px' }}>
                         <h6>User (address)</h6>
                         <span>
-                          {answer.nickname} ({answer.author})
+                          {answer.nickname} (
+                          <a
+                            href={`https://goerli.etherscan.io/address/${answer?.author}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {answer?.author}
+                          </a>
+                          )
                         </span>
                       </div>
                       <div style={{ marginBottom: '30px' }}>
@@ -135,13 +146,29 @@ const DetailAnswer = ({
               <div className="box-part" key={answer.aid}>
                 <div className="text content-box">
                   <div style={{ marginBottom: '30px' }}>
-                    <h6>AnswerId</h6>
-                    <span>{answer.aid}</span>
+                    <h6>cid</h6>
+                    <span>
+                      <a
+                        href={`https://ipfs.io/ipfs/${answer.cid}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {answer.cid}
+                      </a>
+                    </span>
                   </div>
                   <div style={{ marginBottom: '30px' }}>
                     <h6>User (address)</h6>
                     <span>
-                      {answer.nickname} ({answer.author})
+                      {answer.nickname} (
+                      <a
+                        href={`https://goerli.etherscan.io/address/${answer.author}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {answer.author}
+                      </a>
+                      )
                     </span>
                   </div>
                   <div style={{ marginBottom: '30px' }}>

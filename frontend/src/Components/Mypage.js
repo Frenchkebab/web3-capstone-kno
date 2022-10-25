@@ -44,7 +44,15 @@ function Mypage() {
 
                     <div className="row mypage-row">
                       <div className="col fw-bold">Wallet Address</div>
-                      <div className="col-8">{walletAddress}</div>
+                      <div className="col-8">
+                        <a
+                          href={`https://goerli.etherscan.io/address/${walletAddress}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {walletAddress}
+                        </a>
+                      </div>
                     </div>
 
                     <div className="row mypage-row">

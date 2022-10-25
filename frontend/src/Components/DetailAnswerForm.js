@@ -70,7 +70,7 @@ const DetailAnswerForm = ({
           onClick={onAnswer}
           className="btn btn-answer bg-dark btn-outline-light btn-lg px-5 text-white "
         >
-          Go to Answer!
+          Post Answer
         </button>
       </div>
     </>

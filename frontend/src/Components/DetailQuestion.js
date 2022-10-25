@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useKNOV1Contract } from '../Context/KNOV1Context';
 
 const DetailQuestion = ({ questionContent }) => {
+  const { knov1Contract } = useKNOV1Contract();
+
+  useEffect(() => {
+    const getQuestionCid = async () => {
+      const cid = await knov1Contract.getQuestionCid(questionContent?.qid);
+      questionContent.cid = cid;
+    };
+
+    if (questionContent) {
+      getQuestionCid();
+    }
+  }, [questionContent]);
+
   return (
     <div className="container question-container">
       <h3>Question</h3>
@@ -12,9 +26,30 @@ const DetailQuestion = ({ questionContent }) => {
         </div>
 
         <div className="text content-box">
+          <h6>CID</h6>
+          <span>
+            <a
+              href={`https://ipfs.io/ipfs/${questionContent?.cid}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {questionContent?.cid}
+            </a>
+          </span>
+        </div>
+
+        <div className="text content-box">
           <h6>Nickname (Address)</h6>
           <span>
-            {questionContent?.nickname} ({questionContent?.author})
+            {questionContent?.nickname} (
+            <a
+              href={`https://goerli.etherscan.io/address/${questionContent?.author}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {questionContent?.author}
+            </a>
+            )
           </span>
         </div>
 
