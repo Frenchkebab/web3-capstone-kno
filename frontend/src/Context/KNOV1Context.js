@@ -15,9 +15,8 @@ export const KNOV1Provider = ({ children }) => {
 
   React.useEffect(() => {
     async function init() {
-      const _provider = await getProvider();
-      const signer = _provider.getSigner();
-      console.log(_provider, signer);
+      let _provider = await getProvider();
+      console.log(_provider);
       const _contract = new ethers.Contract(
         addresses.KNOV1,
         KNOV1.abi,
@@ -26,9 +25,7 @@ export const KNOV1Provider = ({ children }) => {
       setContract(_contract);
     }
 
-    if (walletAddress) {
-      init();
-    }
+    init();
   }, [walletAddress]);
 
   return (
