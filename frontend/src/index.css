@@ -1,45 +1,40 @@
-
-span{
-  font-size:15px;
+span {
+  font-size: 15px;
 }
 
-
-a{
-  text-decoration:none; 
+a {
+  text-decoration: none;
 }
 
-.main-title{
+.main-title {
   padding-top: 5%;
   text-align: center;
 }
-.body{
+.body {
   background: #eee;
 }
 
-.box{
-  padding:60px 0px;
+.box {
+  padding: 60px 0px;
 }
 
-.box-part{
-  background:#FFF;
-  border-radius:0;
-  padding:60px 10px;
-  margin:30px 0px;
+.box-part {
+  background: #fff;
+  border-radius: 0;
+  padding: 60px 10px;
+  margin: 30px 0px;
 }
-.text{
-  margin:20px 0px;
+.text {
+  margin: 20px 0px;
 }
 
-
-.register-login-form
-{
-  min-height: 100vh; 
-  background-size: cover; 
+.register-login-form {
+  min-height: 100vh;
+  background-size: cover;
   background-color: #eee;
 }
 
-.card
-{
+.card {
   border: 0%;
 }
 
@@ -50,75 +45,62 @@ a{
   padding-top: 5%;
   padding-right: 5%;
   padding-bottom: 20%;
-
 }
 
-.form-group
-{
+.form-group {
   padding-bottom: 2%;
 }
 
-.btn-post
-{
+.btn-post {
   position: relative;
   left: 10%;
 }
 
-.question-container
-{
+.question-container {
   padding-bottom: 5%;
 }
-.answer-container
-{
+.answer-container {
   padding-bottom: 5%;
 }
-.input-part
-{
+.input-part {
   padding-top: 2%;
 }
 
-.btn-answer 
-{
+.btn-answer {
   position: relative;
   padding-top: 5%;
-  left:40%;
+  left: 40%;
 }
 
-.inform-card
-{
+.inform-card {
   padding-top: 5%;
   height: 500px;
 }
 
-.mypage-row
-{
+.mypage-row {
   padding: 5%;
 }
 
-.btn-accept
-{
+.btn-accept {
   position: relative;
   left: 85%;
   background-color: #eee;
   font-size: 1px;
 }
 
-.btn-edit
-{
+.btn-edit {
   position: relative;
   left: 85%;
   background-color: #eee;
   font-size: 1px;
 }
 
-.content-box
-{
+.content-box {
   position: relative;
-  left: 5%;
-  right: 5%;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
-.form-content
-{
+.form-content {
   height: 400px;
 }

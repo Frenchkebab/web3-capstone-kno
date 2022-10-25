@@ -29,7 +29,7 @@ const Detail = () => {
     const cid = question.cid;
     const reward = question.reward.toNumber();
     const res = await axios.get(`https://nftstorage.link/ipfs/${cid}`);
-    const content = { ...res.data, reward: reward };
+    const content = { ...res.data, cid: cid, reward: reward };
     setQuestionContent(content);
   };
 

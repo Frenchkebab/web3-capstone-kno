@@ -4,25 +4,25 @@ import { useKNOV1Contract } from '../Context/KNOV1Context';
 const DetailQuestion = ({ questionContent }) => {
   const { knov1Contract } = useKNOV1Contract();
 
-  useEffect(() => {
-    const getQuestionCid = async () => {
-      const cid = await knov1Contract.getQuestionCid(questionContent?.qid);
-      questionContent.cid = cid;
-    };
+  // useEffect(() => {
+  //   const getQuestionCid = async () => {
+  //     const cid = await knov1Contract.getQuestionCid(questionContent?.qid);
+  //     questionContent.cid = cid;
+  //   };
 
-    if (questionContent) {
-      getQuestionCid();
-    }
-  }, [questionContent]);
+  //   if (questionContent) {
+  //     getQuestionCid();
+  //   }
+  // }, [questionContent]);
 
   return (
-    <div className="container question-container">
+    <div className="container question-container" style={{ width: '100%' }}>
       <h3>Question</h3>
 
       <div className="box-part">
         <div className="title content-box">
           <h5>Title</h5>
-          <span>{questionContent?.title}</span>
+          <div style={{ wordBreak: 'break-all' }}>{questionContent?.title}</div>
         </div>
 
         <div className="text content-box">
@@ -55,7 +55,7 @@ const DetailQuestion = ({ questionContent }) => {
 
         <div className="text content-box">
           <h6>Content: </h6>
-          <span>{questionContent?.content}</span>
+          <p>{questionContent?.content}</p>
         </div>
 
         <div className="text content-box">

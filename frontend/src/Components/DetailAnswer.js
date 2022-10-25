@@ -143,8 +143,12 @@ const DetailAnswer = ({
         {answerContents.map((answer) => {
           if (answer.aid !== selectedAnswerId) {
             return (
-              <div className="box-part" key={answer.aid}>
-                <div className="text content-box">
+              <div
+                className="box-part"
+                key={answer.aid}
+                style={{ width: '100%' }}
+              >
+                <div className="text content-box" style={{ width: 'auto' }}>
                   <div style={{ marginBottom: '30px' }}>
                     <h6>cid</h6>
                     <span>
@@ -171,9 +175,17 @@ const DetailAnswer = ({
                       )
                     </span>
                   </div>
-                  <div style={{ marginBottom: '30px' }}>
+                  <div style={{ marginBottom: '30px', width: '100%' }}>
                     <h6>Answer</h6>
-                    <span>{answer.content}</span>
+                    <p
+                      style={{
+                        display: 'inline-block',
+                        wordBreak: 'break-word',
+                        width: '100%',
+                      }}
+                    >
+                      {answer.content}
+                    </p>
                   </div>
                 </div>
                 {isMine && !isSelected ? (
