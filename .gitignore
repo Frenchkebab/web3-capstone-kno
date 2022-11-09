@@ -8,4 +8,4 @@ build
 
 #Hardhat files
 cache
-# artifacts
+artifacts

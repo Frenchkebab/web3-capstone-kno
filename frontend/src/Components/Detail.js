@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { viewContentState } from '../atoms';
@@ -9,6 +9,7 @@ import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
 import DetailAnswerForm from './DetailAnswerForm';
 import DetailAnswer from './DetailAnswer';
+import { ethers } from 'ethers';
 
 const Detail = () => {
   const { qid } = useParams();
@@ -27,7 +28,7 @@ const Detail = () => {
     // get question
     const question = await knov1Contract.getQuestion(qid);
     const cid = question.cid;
-    const reward = question.reward.toNumber();
+    const reward = ethers.utils.formatEther(question.reward);
     const res = await axios.get(`https://nftstorage.link/ipfs/${cid}`);
     const content = { ...res.data, cid: cid, reward: reward };
     setQuestionContent(content);
@@ -114,7 +115,7 @@ const Detail = () => {
 
           {!isMine && isRegistered && !isSelected ? (
             <DetailAnswerForm
-              qid={qid}
+              qid={parseInt(qid)}
               knov1Contract={knov1Contract}
               walletAddress={walletAddress}
               userNickname={userNickname}

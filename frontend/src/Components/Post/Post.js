@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useWallet } from '../../Context/WalletContext';
 import { uploadData } from '../../Helpers/ipfs';
-import { useKNOV1Contract } from '../../Context/KNOV1Context';
+import { useKNOV1Contract } from '../../Context/ContractContext';
 import { getSigner } from '../../Helpers/provider';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
@@ -12,6 +12,7 @@ function Post() {
 
   const [author, setAuthor] = useState(walletAddress);
   const [title, setTitle] = useState('');
+  const [reward, setReward] = useState('');
   const [content, setContent] = useState('');
   const [timestamp, setTimestamp] = useState();
 
@@ -23,6 +24,11 @@ function Post() {
 
   const onTitleHandler = (e) => {
     setTitle(e.target.value);
+    setTimestamp(Date.now());
+  };
+  const onRewardHandler = (e) => {
+    setReward(e.target.value);
+    console.log(reward);
     setTimestamp(Date.now());
   };
 
@@ -53,8 +59,12 @@ function Post() {
       // upload the post
       const cid = await uploadData(postInfo);
       // const cid = ethers.utils.formatBytes32String(await uploadData(postInfo));
+      alert('Uploaded to IPFS, wait for Ethereum transaction...');
 
-      const tx = await signedKnoV1Contract.postQuestion(cid);
+      const tx = await signedKnoV1Contract.postQuestion(
+        cid,
+        ethers.utils.parseEther(`${reward}`)
+      );
       await tx.wait();
 
       const userQids = await signedKnoV1Contract.getUserQids();
@@ -71,7 +81,7 @@ function Post() {
 
   return (
     <div className="Post">
-      <div className="post">
+      <div className="post pt-4">
         <form>
           <div className="form-group row">
             <label htmlFor="title" className="col-sm-2 col-form-label">
@@ -85,6 +95,23 @@ function Post() {
                 name="title"
                 value={title}
                 onChange={onTitleHandler}
+              ></input>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="reward" className="col-sm-2 col-form-label">
+              Reward Token
+            </label>
+            <div className="col-sm-2">
+              <input
+                type="text"
+                placeholder="ex: 20"
+                className="form-control form-body"
+                id="reward"
+                name="reward"
+                value={reward}
+                onChange={onRewardHandler}
               ></input>
             </div>
           </div>

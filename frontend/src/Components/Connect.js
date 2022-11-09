@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner, getSignerAddress } from '../Helpers/provider';
 

@@ -6,7 +6,13 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "contract KNOToken",
+						"name": "_knoToken",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -330,6 +336,11 @@
 						"internalType": "string",
 						"name": "cid",
 						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reward",
+						"type": "uint256"
 					}
 				],
 				"name": "postQuestion",
@@ -414,12 +425,28 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/KNOV1.sol": {
-			"keccak256": "0x3297062301eb6bfa376543a9c7cbd2cd3197abd2748d7d99f0479dba0dd32394",
+		"contracts/IERC20.sol": {
+			"keccak256": "0x2d15296ca79a3ab4ec9476e0aa6f4fd27eb56cc192c67e372bff46f14ed72542",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fe792de781ec6394b58076919144419c300628a377b89daa92f3bab8f91c0aef",
-				"dweb:/ipfs/QmcusAL9ExQVPyWBrr2aABRX2Pot1jWxikDCvK2M9Q6SAt"
+				"bzz-raw://9d4d179d1a308bb774d7b52247aa027c9320b0a94e3e782e79f0c5ba525bdac5",
+				"dweb:/ipfs/Qmc9m1vN8oacrLf5NNhiSTQZRBmZW4TYmV96iEcaRxKQ4m"
+			]
+		},
+		"contracts/KNOToken.sol": {
+			"keccak256": "0xed7b65b7d28ac670b4b872fc07738a4369521c0aa00bd6fd3f348a0b8446829c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3d692e7277a12bdc1c61e318ec5ec4347095372f90b254e9e6a8400900b5ea68",
+				"dweb:/ipfs/QmT8CcDqWJWyAoZ2pPDPSxHQSC7JBqES7LzjZEXjGyr56m"
+			]
+		},
+		"contracts/KNOV1.sol": {
+			"keccak256": "0x8fca119a2ed98d117bd144c1361da72c1bcec587bdd7072eb57f795026f9108e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://368a596af97cb75a88510a096e11a69ea11071ca077285d4588a370b8a116f73",
+				"dweb:/ipfs/QmWjHqTSEXXa2XEMABjnfeyjd7w1PQwKyDwzp5ANdkJNgZ"
 			]
 		}
 	},

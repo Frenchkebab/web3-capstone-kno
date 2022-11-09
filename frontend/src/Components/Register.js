@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { usernameState } from '../atoms';
 import { Link, useNavigate } from 'react-router-dom';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 import { ethers } from 'ethers';
 import { useWallet } from '../Context/WalletContext';
 import { getSigner } from '../Helpers/provider';
@@ -22,9 +22,8 @@ function Register() {
       alert('Please fill in nickname');
     } else {
       try {
-        // call register()
+        alert('Wait for the transaction');
         const signedKnoV1Contract = knov1Contract.connect(await getSigner());
-        console.log('Signed KNOV1 Contract: ', signedKnoV1Contract);
         const tx = await signedKnoV1Contract.registerUser(username);
         await tx.wait();
         setIsRegistered(true);

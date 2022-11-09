@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 import { getSigner } from '../Helpers/provider';
 
 const DetailAnswer = ({
@@ -74,7 +74,8 @@ const DetailAnswer = ({
     const signedKnoV1Contract = knov1Contract.connect(await getSigner());
     const tx = await signedKnoV1Contract.selectAnswer(qid, aid);
     await tx.wait();
-    alert('answer selected!');
+    alert('answer selected!, 20% reward paid back');
+    window.location.reload();
   };
 
   return (
@@ -101,7 +102,7 @@ const DetailAnswer = ({
                         </span>
                       </div>
                       <div style={{ marginBottom: '30px' }}>
-                        <h6>User (address)</h6>
+                        <h6>Nickname (address)</h6>
                         <span>
                           {answer.nickname} (
                           <a

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 
 const DetailQuestion = ({ questionContent }) => {
   const { knov1Contract } = useKNOV1Contract();

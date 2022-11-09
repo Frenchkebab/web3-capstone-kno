@@ -8,7 +8,7 @@ import {
   totalQuestionNumState,
   viewContentState,
 } from '../atoms';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 
 function Board() {
   // contract

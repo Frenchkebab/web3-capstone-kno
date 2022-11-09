@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useKNOV1Contract } from '../Context/KNOV1Context';
+import { useKNOV1Contract } from '../Context/ContractContext';
 import { useWallet } from '../Context/WalletContext';
 import { getTruncatedAddress } from '../Helpers/provider';
 import Connect from './Connect';
 
 function Header() {
   const { walletAddress, isRegistered, setIsRegistered } = useWallet();
-  const { knov1Contract } = useKNOV1Contract();
+  const { knov1Contract, knoTokenContract } = useKNOV1Contract();
 
   const checkRegistry = async () => {
     const registry = await knov1Contract.getIsRegistered(walletAddress);

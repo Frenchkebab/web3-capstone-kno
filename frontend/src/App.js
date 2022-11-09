@@ -7,7 +7,7 @@ import Detail from './Components/Detail';
 import Mypage from './Components/Mypage';
 import Header from './Components/Header';
 import { WalletProvider } from './Context/WalletContext';
-import { KNOV1Provider } from './Context/KNOV1Context';
+import { KNOV1Provider } from './Context/ContractContext';
 
 function App() {
   return (

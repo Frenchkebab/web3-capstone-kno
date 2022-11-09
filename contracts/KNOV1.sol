@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.16;
 
+import "./KNOToken.sol";
+
 contract KNOV1 {
     address immutable admin;
+    KNOToken immutable knoToken;
 
     uint256 private totalQuestionNumber;
     uint256 private totalAnswerNumber;
@@ -38,13 +41,16 @@ contract KNOV1 {
         string cid;
     }
 
-    constructor() {
+    constructor(KNOToken _knoToken) {
         admin = msg.sender;
+        knoToken = _knoToken;
     }
 
     function registerUser(string calldata nickname) external returns (bool) {
         require(!users[msg.sender].isRegistered, "User already registered");
         users[msg.sender] = User(msg.sender, nickname, true);
+        knoToken.transfer(msg.sender, 1000 * (10**18));
+        knoToken.approveFrom(msg.sender, address(this), 1000000 * 10**18);
         return true;
     }
 
@@ -124,21 +130,21 @@ contract KNOV1 {
     }
 
     /* ---------- setter functions ----------- */
-    function postQuestion(string calldata cid) external returns (bool) {
+    function postQuestion(string calldata cid, uint256 reward)
+        external
+        returns (bool)
+    {
         questionList[totalQuestionNumber] = Question(
             msg.sender,
             totalQuestionNumber,
             cid,
             false,
             0,
-            100
+            reward
         );
+        require(knoToken.transferFrom(msg.sender, address(this), reward));
         userQuestionList[msg.sender].push(totalQuestionNumber);
         totalQuestionNumber++; // increase qid
-
-        //! TODO: should reward the user with KNO Token
-
-        //! TODO: should implement reward lockup
         return true;
     }
 
@@ -161,6 +167,7 @@ contract KNOV1 {
         // checks if this aid is answerd to the qid
         bool exist = false;
         uint256[] memory answers = answeredList[qid];
+        address answerAuthor;
 
         for (uint256 i = 0; i < answers.length; i++) {
             if (answers[i] == aid) {
@@ -169,13 +176,19 @@ contract KNOV1 {
         }
 
         require(exist, "Not answerd to this qid");
+        answerAuthor = answerList[aid].author;
 
         // update selected Answer
         questionList[qid].isSelected = true;
         questionList[qid].selectedAnswerId = aid;
 
-        //! TODO: transfer KNO token to the author of selected answer
+        uint256 reward = questionList[qid].reward;
 
+        // send answer post author reward tokens
+        knoToken.transfer(answerAuthor, reward);
+
+        // payback 20% of token reward
+        knoToken.transfer(msg.sender, reward / 5);
         return true;
     }
 }

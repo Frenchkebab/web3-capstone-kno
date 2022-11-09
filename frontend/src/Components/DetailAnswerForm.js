@@ -33,20 +33,18 @@ const DetailAnswerForm = ({
       console.log('Please fill in the form');
     } else {
       alert('Wait for upload...');
-      //! TODO: 1) upload on ipfs
       const cid = await uploadData(answerInfo);
       console.log(cid);
-
-      //! TOOD: 2) send this to the contract
+      alert('Uploaded to IPFS, wait for Ethereum transaction.');
       const signedKnoV1Contract = knov1Contract.connect(await getSigner());
       const tx = await signedKnoV1Contract.postAnswer(qid, cid);
       await tx.wait();
-
       alert('Successfully Posted');
       const aids = await knov1Contract.getQuestionAids(qid);
       aids.forEach((aid) => console.log(aid.toNumber()));
 
       setAnswer('');
+      window.location.reload();
     }
   };
 
